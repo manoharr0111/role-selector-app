@@ -2,34 +2,27 @@ import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Auth from "./pages/Auth";
-import Index from "./pages/Index";
-import ManageFaculties from "./pages/admin/ManageFaculties";
-import ManageStudents from "./pages/admin/ManageStudents";
-import ManageClasses from "./pages/admin/ManageClasses";
-import ViewReports from "./pages/admin/ViewReports";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Index from "@/pages/Index";
+import ManageAttendance from "@/pages/faculty/ManageAttendance";
+import AttendanceRecords from "@/pages/faculty/AttendanceRecords";
+import DownloadReports from "@/pages/faculty/DownloadReports";
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+function App() {
+  return (
+    <Router>
+      <TooltipProvider>
         <Routes>
-          <Route path="/" element={<Auth />} />
-          <Route path="/dashboard" element={<Index />} />
-          <Route path="/admin/faculties" element={<ManageFaculties />} />
-          <Route path="/admin/students" element={<ManageStudents />} />
-          <Route path="/admin/classes" element={<ManageClasses />} />
-          <Route path="/admin/reports" element={<ViewReports />} />
+          <Route path="/" element={<Index />} />
+          <Route path="/faculty/attendance" element={<ManageAttendance />} />
+          <Route path="/faculty/records" element={<AttendanceRecords />} />
+          <Route path="/faculty/reports" element={<DownloadReports />} />
         </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+        <Toaster />
+        <Sonner />
+      </TooltipProvider>
+    </Router>
+  );
+}
 
 export default App;

@@ -5,7 +5,7 @@ import { Users, BookOpen, BarChart, ClipboardCheck, Download, User, LogOut } fro
 import { useNavigate } from "react-router-dom";
 
 // Temporary mock - replace with actual auth logic later
-const mockUserRole = "admin" as UserRole;
+const mockUserRole = "faculty" as UserRole;
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -36,25 +36,29 @@ const AdminDashboard = () => {
   );
 };
 
-const FacultyDashboard = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <DashboardCard
-      icon={<ClipboardCheck className="h-6 w-6" />}
-      title="Manage Attendance"
-      onClick={() => console.log("Navigate to Manage Attendance")}
-    />
-    <DashboardCard
-      icon={<ClipboardCheck className="h-6 w-6" />}
-      title="View/Edit Attendance Records"
-      onClick={() => console.log("Navigate to View/Edit Records")}
-    />
-    <DashboardCard
-      icon={<Download className="h-6 w-6" />}
-      title="Download Reports"
-      onClick={() => console.log("Navigate to Download Reports")}
-    />
-  </div>
-);
+const FacultyDashboard = () => {
+  const navigate = useNavigate();
+  
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <DashboardCard
+        icon={<ClipboardCheck className="h-6 w-6" />}
+        title="Manage Attendance"
+        onClick={() => navigate("/faculty/attendance")}
+      />
+      <DashboardCard
+        icon={<ClipboardCheck className="h-6 w-6" />}
+        title="View/Edit Attendance Records"
+        onClick={() => navigate("/faculty/records")}
+      />
+      <DashboardCard
+        icon={<Download className="h-6 w-6" />}
+        title="Download Reports"
+        onClick={() => navigate("/faculty/reports")}
+      />
+    </div>
+  );
+};
 
 const StudentDashboard = () => (
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
