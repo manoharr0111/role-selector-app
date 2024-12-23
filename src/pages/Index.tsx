@@ -60,25 +60,29 @@ const FacultyDashboard = () => {
   );
 };
 
-const StudentDashboard = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <DashboardCard
-      icon={<ClipboardCheck className="h-6 w-6" />}
-      title="View Attendance"
-      onClick={() => console.log("Navigate to View Attendance")}
-    />
-    <DashboardCard
-      icon={<Download className="h-6 w-6" />}
-      title="Download Attendance Reports"
-      onClick={() => console.log("Navigate to Download Reports")}
-    />
-    <DashboardCard
-      icon={<User className="h-6 w-6" />}
-      title="Update Profile"
-      onClick={() => console.log("Navigate to Update Profile")}
-    />
-  </div>
-);
+const StudentDashboard = () => {
+  const navigate = useNavigate();
+  
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <DashboardCard
+        icon={<ClipboardCheck className="h-6 w-6" />}
+        title="View Attendance"
+        onClick={() => navigate("/student/attendance")}
+      />
+      <DashboardCard
+        icon={<Download className="h-6 w-6" />}
+        title="Download Reports"
+        onClick={() => navigate("/student/reports")}
+      />
+      <DashboardCard
+        icon={<User className="h-6 w-6" />}
+        title="Update Profile"
+        onClick={() => navigate("/student/profile")}
+      />
+    </div>
+  );
+};
 
 const DashboardCard = ({ 
   icon, 
