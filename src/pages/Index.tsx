@@ -1,11 +1,121 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { UserRole } from "@/types/auth";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Users, BookOpen, BarChart, ClipboardCheck, Download, User, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+// Temporary mock - replace with actual auth logic later
+const mockUserRole: UserRole = "admin";
 
 const Index = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Add logout logic here
+    navigate("/");
+  };
+
+  const AdminDashboard = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <DashboardCard
+        icon={<Users className="h-6 w-6" />}
+        title="Manage Faculties"
+        onClick={() => console.log("Navigate to Manage Faculties")}
+      />
+      <DashboardCard
+        icon={<Users className="h-6 w-6" />}
+        title="Manage Students"
+        onClick={() => console.log("Navigate to Manage Students")}
+      />
+      <DashboardCard
+        icon={<BookOpen className="h-6 w-6" />}
+        title="Manage Classes/Subjects"
+        onClick={() => console.log("Navigate to Manage Classes")}
+      />
+      <DashboardCard
+        icon={<BarChart className="h-6 w-6" />}
+        title="View Reports"
+        onClick={() => console.log("Navigate to View Reports")}
+      />
+    </div>
+  );
+
+  const FacultyDashboard = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <DashboardCard
+        icon={<ClipboardCheck className="h-6 w-6" />}
+        title="Manage Attendance"
+        onClick={() => console.log("Navigate to Manage Attendance")}
+      />
+      <DashboardCard
+        icon={<ClipboardCheck className="h-6 w-6" />}
+        title="View/Edit Attendance Records"
+        onClick={() => console.log("Navigate to View/Edit Records")}
+      />
+      <DashboardCard
+        icon={<Download className="h-6 w-6" />}
+        title="Download Reports"
+        onClick={() => console.log("Navigate to Download Reports")}
+      />
+    </div>
+  );
+
+  const StudentDashboard = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <DashboardCard
+        icon={<ClipboardCheck className="h-6 w-6" />}
+        title="View Attendance"
+        onClick={() => console.log("Navigate to View Attendance")}
+      />
+      <DashboardCard
+        icon={<Download className="h-6 w-6" />}
+        title="Download Attendance Reports"
+        onClick={() => console.log("Navigate to Download Reports")}
+      />
+      <DashboardCard
+        icon={<User className="h-6 w-6" />}
+        title="Update Profile"
+        onClick={() => console.log("Navigate to Update Profile")}
+      />
+    </div>
+  );
+
+  const DashboardCard = ({ icon, title, onClick }: { 
+    icon: React.ReactNode;
+    title: string;
+    onClick: () => void;
+  }) => (
+    <Card 
+      className="hover:shadow-lg transition-shadow cursor-pointer"
+      onClick={onClick}
+    >
+      <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
+        {icon}
+        <h3 className="text-lg font-semibold text-center">{title}</h3>
+      </CardContent>
+    </Card>
+  );
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background p-6">
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">
+            Welcome, {mockUserRole.charAt(0).toUpperCase() + mockUserRole.slice(1)}
+          </h1>
+          <Button 
+            variant="outline" 
+            onClick={handleLogout}
+            className="gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+            Logout
+          </Button>
+        </div>
+
+        {mockUserRole === "admin" && <AdminDashboard />}
+        {mockUserRole === "faculty" && <FacultyDashboard />}
+        {mockUserRole === "student" && <StudentDashboard />}
       </div>
     </div>
   );
