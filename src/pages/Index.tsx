@@ -7,86 +7,94 @@ import { useNavigate } from "react-router-dom";
 // Temporary mock - replace with actual auth logic later
 const mockUserRole = "admin" as UserRole;
 
-  const AdminDashboard = () => (
+const AdminDashboard = () => {
+  const navigate = useNavigate();
+  
+  return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <DashboardCard
         icon={<Users className="h-6 w-6" />}
         title="Manage Faculties"
-        onClick={() => console.log("Navigate to Manage Faculties")}
+        onClick={() => navigate("/admin/faculties")}
       />
       <DashboardCard
         icon={<Users className="h-6 w-6" />}
         title="Manage Students"
-        onClick={() => console.log("Navigate to Manage Students")}
+        onClick={() => navigate("/admin/students")}
       />
       <DashboardCard
         icon={<BookOpen className="h-6 w-6" />}
         title="Manage Classes/Subjects"
-        onClick={() => console.log("Navigate to Manage Classes")}
+        onClick={() => navigate("/admin/classes")}
       />
       <DashboardCard
         icon={<BarChart className="h-6 w-6" />}
         title="View Reports"
-        onClick={() => console.log("Navigate to View Reports")}
+        onClick={() => navigate("/admin/reports")}
       />
     </div>
   );
+};
 
-  const FacultyDashboard = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <DashboardCard
-        icon={<ClipboardCheck className="h-6 w-6" />}
-        title="Manage Attendance"
-        onClick={() => console.log("Navigate to Manage Attendance")}
-      />
-      <DashboardCard
-        icon={<ClipboardCheck className="h-6 w-6" />}
-        title="View/Edit Attendance Records"
-        onClick={() => console.log("Navigate to View/Edit Records")}
-      />
-      <DashboardCard
-        icon={<Download className="h-6 w-6" />}
-        title="Download Reports"
-        onClick={() => console.log("Navigate to Download Reports")}
-      />
-    </div>
-  );
+const FacultyDashboard = () => (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <DashboardCard
+      icon={<ClipboardCheck className="h-6 w-6" />}
+      title="Manage Attendance"
+      onClick={() => console.log("Navigate to Manage Attendance")}
+    />
+    <DashboardCard
+      icon={<ClipboardCheck className="h-6 w-6" />}
+      title="View/Edit Attendance Records"
+      onClick={() => console.log("Navigate to View/Edit Records")}
+    />
+    <DashboardCard
+      icon={<Download className="h-6 w-6" />}
+      title="Download Reports"
+      onClick={() => console.log("Navigate to Download Reports")}
+    />
+  </div>
+);
 
-  const StudentDashboard = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <DashboardCard
-        icon={<ClipboardCheck className="h-6 w-6" />}
-        title="View Attendance"
-        onClick={() => console.log("Navigate to View Attendance")}
-      />
-      <DashboardCard
-        icon={<Download className="h-6 w-6" />}
-        title="Download Attendance Reports"
-        onClick={() => console.log("Navigate to Download Reports")}
-      />
-      <DashboardCard
-        icon={<User className="h-6 w-6" />}
-        title="Update Profile"
-        onClick={() => console.log("Navigate to Update Profile")}
-      />
-    </div>
-  );
+const StudentDashboard = () => (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <DashboardCard
+      icon={<ClipboardCheck className="h-6 w-6" />}
+      title="View Attendance"
+      onClick={() => console.log("Navigate to View Attendance")}
+    />
+    <DashboardCard
+      icon={<Download className="h-6 w-6" />}
+      title="Download Attendance Reports"
+      onClick={() => console.log("Navigate to Download Reports")}
+    />
+    <DashboardCard
+      icon={<User className="h-6 w-6" />}
+      title="Update Profile"
+      onClick={() => console.log("Navigate to Update Profile")}
+    />
+  </div>
+);
 
-  const DashboardCard = ({ icon, title, onClick }: { 
-    icon: React.ReactNode;
-    title: string;
-    onClick: () => void;
-  }) => (
-    <Card 
-      className="hover:shadow-lg transition-shadow cursor-pointer"
-      onClick={onClick}
-    >
-      <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-        {icon}
-        <h3 className="text-lg font-semibold text-center">{title}</h3>
-      </CardContent>
-    </Card>
-  );
+const DashboardCard = ({ 
+  icon, 
+  title, 
+  onClick 
+}: { 
+  icon: React.ReactNode;
+  title: string;
+  onClick: () => void;
+}) => (
+  <Card 
+    className="hover:shadow-lg transition-shadow cursor-pointer"
+    onClick={onClick}
+  >
+    <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
+      {icon}
+      <h3 className="text-lg font-semibold text-center">{title}</h3>
+    </CardContent>
+  </Card>
+);
 
 const Index = () => {
   const navigate = useNavigate();
