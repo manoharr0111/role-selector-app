@@ -5,15 +5,7 @@ import { Users, BookOpen, BarChart, ClipboardCheck, Download, User, LogOut } fro
 import { useNavigate } from "react-router-dom";
 
 // Temporary mock - replace with actual auth logic later
-const mockUserRole: UserRole = "admin";
-
-const Index = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Add logout logic here
-    navigate("/");
-  };
+const mockUserRole = "admin" as UserRole;
 
   const AdminDashboard = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -95,6 +87,14 @@ const Index = () => {
       </CardContent>
     </Card>
   );
+
+const Index = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Add logout logic here
+    navigate("/");
+  };
 
   return (
     <div className="min-h-screen bg-background p-6">
