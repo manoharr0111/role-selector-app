@@ -1,8 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Default to empty strings if env vars are not set
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables');
+}
 
 // Create a singleton instance
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -37,7 +40,7 @@ export const getCurrentUserRole = async () => {
       .single();
 
     if (error) throw error;
-    return data.role;
+    return data?.role;
   } catch (error) {
     console.error('Error getting user role:', error);
     return null;
