@@ -17,6 +17,8 @@ function App() {
           <Route path="/faculty/attendance" element={<ManageAttendance />} />
           <Route path="/faculty/records" element={<AttendanceRecords />} />
           <Route path="/faculty/reports" element={<DownloadReports />} />
+          <Route path="/settings" element={<div>Settings Page (Coming Soon)</div>} />
+          <Route path="/help" element={<div>Help Page (Coming Soon)</div>} />
         </Routes>
         <Toaster />
         <Sonner />

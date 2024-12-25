@@ -1,8 +1,8 @@
 import { UserRole } from "@/types/auth";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Users, BookOpen, BarChart, ClipboardCheck, Download, User, LogOut } from "lucide-react";
+import { Users, BookOpen, BarChart, ClipboardCheck, Download, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import AppLayout from "@/components/layout/AppLayout";
 
 // Temporary mock - replace with actual auth logic later
 const mockUserRole = "faculty" as UserRole;
@@ -105,35 +105,20 @@ const DashboardCard = ({
 );
 
 const Index = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Add logout logic here
-    navigate("/");
-  };
-
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">
+    <AppLayout userRole={mockUserRole}>
+      <div className="p-6">
+        <div className="max-w-7xl mx-auto space-y-6">
+          <h1 className="text-3xl font-bold mb-8">
             Welcome, {mockUserRole.charAt(0).toUpperCase() + mockUserRole.slice(1)}
           </h1>
-          <Button 
-            variant="outline" 
-            onClick={handleLogout}
-            className="gap-2"
-          >
-            <LogOut className="h-4 w-4" />
-            Logout
-          </Button>
-        </div>
 
-        {mockUserRole === "admin" && <AdminDashboard />}
-        {mockUserRole === "faculty" && <FacultyDashboard />}
-        {mockUserRole === "student" && <StudentDashboard />}
+          {mockUserRole === "admin" && <AdminDashboard />}
+          {mockUserRole === "faculty" && <FacultyDashboard />}
+          {mockUserRole === "student" && <StudentDashboard />}
+        </div>
       </div>
-    </div>
+    </AppLayout>
   );
 };
 
