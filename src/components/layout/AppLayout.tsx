@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Menu, Settings, HelpCircle, LogOut, User, ClipboardCheck, Download } from "lucide-react";
 import { UserRole } from "@/types/auth";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/lib/supabase";
+import { useToast } from "@/hooks/use-toast";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -13,6 +15,28 @@ interface AppLayoutProps {
 
 const AppLayout = ({ children, userRole }: AppLayoutProps) => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      toast({
+        title: "Logged out successfully",
+        description: "You have been logged out of your account.",
+      });
+      
+      navigate("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast({
+        variant: "destructive",
+        title: "Error logging out",
+        description: "Please try again.",
+      });
+    }
+  };
 
   const getNavItems = (role: UserRole) => {
     switch (role) {
@@ -44,10 +68,8 @@ const AppLayout = ({ children, userRole }: AppLayoutProps) => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Main Content */}
       <main className="pb-16 md:pb-0">{children}</main>
 
-      {/* Side Drawer */}
       <Sheet>
         <SheetTrigger asChild>
           <Button
@@ -79,7 +101,7 @@ const AppLayout = ({ children, userRole }: AppLayoutProps) => {
             <Button
               variant="ghost"
               className="justify-start gap-2 text-destructive hover:text-destructive"
-              onClick={() => navigate("/")}
+              onClick={handleLogout}
             >
               <LogOut className="h-5 w-5" />
               Logout
@@ -88,7 +110,6 @@ const AppLayout = ({ children, userRole }: AppLayoutProps) => {
         </SheetContent>
       </Sheet>
 
-      {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-background border-t md:hidden">
         <nav className="flex justify-around p-2">
           {navItems.map((item, index) => (
