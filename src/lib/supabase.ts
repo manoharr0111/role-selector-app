@@ -1,14 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 
+// Check for environment variables with console warnings for debugging
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
+if (!supabaseUrl) {
+  console.warn('VITE_SUPABASE_URL is not set');
 }
 
-// Create a singleton instance
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+if (!supabaseAnonKey) {
+  console.warn('VITE_SUPABASE_ANON_KEY is not set');
+}
+
+// Create a singleton instance with fallback empty strings to prevent immediate crashes
+export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '', {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
