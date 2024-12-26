@@ -1,30 +1,43 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Check for environment variables with console warnings for debugging
+// Get environment variables with more detailed error messages
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl) {
-  console.warn('VITE_SUPABASE_URL is not set');
+// Log detailed information about missing environment variables
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error(`
+    Environment variables missing:
+    VITE_SUPABASE_URL: ${supabaseUrl ? '✓' : '✗'}
+    VITE_SUPABASE_ANON_KEY: ${supabaseAnonKey ? '✓' : '✗'}
+    
+    Please ensure you have:
+    1. Created a .env file in your project root
+    2. Added the required Supabase credentials
+    3. Restarted your development server
+  `);
 }
 
-if (!supabaseAnonKey) {
-  console.warn('VITE_SUPABASE_ANON_KEY is not set');
-}
-
-// Create a singleton instance with fallback empty strings to prevent immediate crashes
-export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '', {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-  },
-});
+// Create a singleton instance with better error handling
+export const supabase = createClient(
+  supabaseUrl || 'http://placeholder-url.com',
+  supabaseAnonKey || 'placeholder-key',
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+    },
+  }
+);
 
 // Helper to get current session
 export const getCurrentSession = async () => {
   try {
     const { data: { session }, error } = await supabase.auth.getSession();
-    if (error) throw error;
+    if (error) {
+      console.error('Error getting session:', error.message);
+      return null;
+    }
     return session;
   } catch (error) {
     console.error('Error getting session:', error);
@@ -44,7 +57,10 @@ export const getCurrentUserRole = async () => {
       .eq('id', session.user.id)
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error getting user role:', error.message);
+      return null;
+    }
     return data?.role;
   } catch (error) {
     console.error('Error getting user role:', error);
